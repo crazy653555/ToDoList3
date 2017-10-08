@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  inputHint = '請輸入待辦事項？';
+  colspanCount = 6;
 }
