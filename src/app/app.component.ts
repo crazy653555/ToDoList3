@@ -8,4 +8,18 @@ import { Component } from '@angular/core';
 export class AppComponent {
   inputHint = '請輸入待辦事項？';
   colspanCount = 6;
+
+  todos: any[] = [];
+  todo = '';
+
+  AddTodo() {
+    if (this.todo) {
+      this.todos = [...this.todos, this.todo];
+      this.todo = '';
+    }
+  }
+
+  todoModelChange($event) {
+    this.todo = $event;
+  }
 }
