@@ -12,9 +12,14 @@ export class AppComponent {
   todos: any[] = [];
   todo = '';
 
+
   AddTodo() {
     if (this.todo) {
-      this.todos = [...this.todos, this.todo];
+     let newTodo = {
+        text: this.todo,
+        done: false
+      };
+      this.todos = [...this.todos, newTodo];
       this.todo = '';
     }
   }
