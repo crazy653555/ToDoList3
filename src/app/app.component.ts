@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -6,7 +6,8 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   inputHint = '請輸入待辦事項？';
   colspanCount = 6;
 
@@ -17,6 +18,7 @@ export class AppComponent {
 
   isToggleAll = false;
 
+  private apiBase = 'http://localhost:3000/todos';
 
   AddTodo() {
     if (this.todo) {
@@ -24,19 +26,25 @@ export class AppComponent {
         text: this.todo,
         done: false
       };
-      this.todos = [...this.todos, newTodo];
-      this.todo = '';
+
+      this.http.post(this.apiBase, newTodo)
+        .subscribe(data => {
+          this.todos = [...this.todos, data];
+          this.todo = '';
+        });
     }
   }
 
-  constructor(private http:HttpClient){}
+  constructor(private http: HttpClient) { }
 
   todoModelChange($event) {
     this.todo = $event;
   }
 
   clearCompleted() {
-    this.todos = this.todos.filter(item => !item.done);
+    this.todos.filter(item => item.done).forEach(todo => {
+      this.removeTodo(todo);
+    });
   }
 
   updateFilterType($event) {
@@ -50,8 +58,22 @@ export class AppComponent {
       item.done = this.isToggleAll;
     });
   }
+
   removeTodo(todo) {
-    this.todos = this.todos.filter(item => item !== todo);
+    this.http.delete(`${this.apiBase}/${todo.id}`, todo)
+      .subscribe(data => {
+        this.todos = this.todos.filter(item => item !== todo);
+      });
   }
 
+  ngOnInit(): void {
+    this.http.get<any>(this.apiBase)
+      .subscribe(data => {
+        this.todos = data;
+      });
+  }
+
+  updateTodo(todo) {
+    this.http.put(`${this.apiBase}/${todo.id}`, todo).subscribe();
+  }
 }
