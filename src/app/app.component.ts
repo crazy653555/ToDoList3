@@ -12,6 +12,7 @@ export class AppComponent {
   todos: any[] = [];
   todo = '';
 
+  filterType = 'All';
 
   AddTodo() {
     if (this.todo) {
@@ -31,4 +32,10 @@ export class AppComponent {
   clearCompleted() {
     this.todos = this.todos.filter(item => !item.done);
   }
+
+  updateFilterType($event) {
+    this.filterType = $event;
+    console.log($event);
+  }
+
 }

@@ -9,6 +9,7 @@ export class FooterComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
   private _todo = [];
   tooMore = false;
+  filterType = '';
 
   @Input('data')
   set todos(value) {
@@ -22,6 +23,7 @@ export class FooterComponent implements OnInit {
     return this._todo;
   }
 
+  @Output() filterTypeChange = new EventEmitter<String>();
 
   constructor() { }
 
@@ -30,6 +32,12 @@ export class FooterComponent implements OnInit {
 
   logFromFooter() {
     console.log('log from footer!!');
+  }
+
+  changeFilterType(value) {
+    this.filterType = value;
+    this.filterTypeChange.emit(value);
+
   }
 
 }
