@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,8 @@ export class AppComponent {
     }
   }
 
+  constructor(private http:HttpClient){}
+
   todoModelChange($event) {
     this.todo = $event;
   }
@@ -47,4 +50,8 @@ export class AppComponent {
       item.done = this.isToggleAll;
     });
   }
+  removeTodo(todo) {
+    this.todos = this.todos.filter(item => item !== todo);
+  }
+
 }
