@@ -12,7 +12,10 @@ export class AppComponent {
   todos: any[] = [];
   todo = '';
 
-  filterType = 'All';
+  filterType = 'false';
+
+  isToggleAll = false;
+
 
   AddTodo() {
     if (this.todo) {
@@ -38,4 +41,10 @@ export class AppComponent {
     console.log($event);
   }
 
+  toggleAll() {
+    console.log(this.isToggleAll);
+    this.todos.forEach(item => {
+      item.done = this.isToggleAll;
+    });
+  }
 }
