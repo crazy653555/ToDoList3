@@ -15,7 +15,7 @@ export class AppComponent {
 
   AddTodo() {
     if (this.todo) {
-     let newTodo = {
+      let newTodo = {
         text: this.todo,
         done: false
       };
@@ -26,5 +26,9 @@ export class AppComponent {
 
   todoModelChange($event) {
     this.todo = $event;
+  }
+
+  clearCompleted() {
+    this.todos = this.todos.filter(item => !item.done);
   }
 }
